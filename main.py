@@ -1,8 +1,5 @@
 from fastapi import FastAPI
-from routes.user_routes import router as user_router
-from routes.ai_response_routes import router as ai_response_router
-from routes.email_routes import router as email_router
-from routes.history_routes import router as history_router
+
 from db import get_db
 from sqlalchemy import create_engine
 import os
