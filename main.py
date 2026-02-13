@@ -1,0 +1,34 @@
+from fastapi import FastAPI
+from routes.user_routes import router as user_router
+from routes.ai_response_routes import router as ai_response_router
+from routes.email_routes import router as email_router
+from routes.history_routes import router as history_router
+from db import get_db
+from sqlalchemy import create_engine
+import os
+from model import Base
+from db import DATABASE_URL
+from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+engine = create_engine(DATABASE_URL)
+Base.metadata.create_all(engine)
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", 
+    port=8000,reload=True)
